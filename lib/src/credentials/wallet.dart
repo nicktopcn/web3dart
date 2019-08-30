@@ -80,6 +80,7 @@ class Wallet {
   /// The credentials stored in this wallet file
   final EthPrivateKey privateKey;
 
+
   /// The key derivator used to obtain the aes decryption key from the password
   final _KeyDerivator _derivator;
 
@@ -96,10 +97,11 @@ class Wallet {
 
   /// Encrypts the private key using the secret specified earlier and returns
   /// a json representation of its data as a v3-wallet file.
-  String toJson() {
+  String toJson(String address) {
     final ciphertextBytes = _encryptPrivateKey();
 
     final map = {
+      'address':strip0x(address),
       'crypto': {
         'cipher': 'aes-128-ctr',
         'cipherparams': {'iv': bytesToHex(_iv)},
